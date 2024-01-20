@@ -11,7 +11,16 @@ def password(request):
 
     characters = list('abcdefghijklmnopqrstuvxyz')
 
-    length = int(request.GET.get('lenght'))
+    if request.GET.get('Uppercase'):
+        characters.extend(list('ABCDEFGHIJKLMNOPQRSTUVXYZ'))
+
+    if request.GET.get('special'):
+        characters.extend(list('!"#$%&/()=?/*-+-_.,:;{[@^}]'))
+
+    if request.GET.get('numbers'):
+        characters.extend(list('1234567890'))
+
+    length = int(request.GET.get('lenght', 12))
 
     thePassword = ''
 
@@ -20,3 +29,6 @@ def password(request):
         thePassword += random.choice(characters)
 
     return render(request, 'gen/password.html', {'password':thePassword})
+
+def about(request):
+    return render(request, 'gen/about.html')
